@@ -34,9 +34,9 @@ class App extends React.Component {
     this.checkIfEat();
   }
 
-  onkeydown = e => {
+  onkeydown = (e, id) => {
     e = e || window.event;
-    switch (e.keyCode) {
+    switch (e.keyCode || id) {
       case 38:
         this.setState({ direction: "UP" });
         break;
@@ -127,11 +127,45 @@ class App extends React.Component {
     const { snakeDots, food, score } = this.state;
     return (
       <div>
+        <div className="btn-container">
+          <button
+            className="up"
+            onClick={e => {
+              this.onkeydown(e, 38);
+            }}
+          >
+            UP
+          </button>
+          <button
+            className="left"
+            onClick={e => {
+              this.onkeydown(e, 37);
+            }}
+          >
+            LEFT
+          </button>
+          <button
+            className="down"
+            onClick={e => {
+              this.onkeydown(e, 40);
+            }}
+          >
+            DOWN
+          </button>
+          <button
+            className="right"
+            onClick={e => {
+              this.onkeydown(e, 39);
+            }}
+          >
+            RIGHT
+          </button>
+        </div>
+        <h1 className="score">Score: {score}</h1>
         <div className="game-area">
           <Snake snakeDots={snakeDots} />
           <Food dot={food} />
         </div>
-        <h1 className="score">Score: {score}</h1>
       </div>
     );
   }

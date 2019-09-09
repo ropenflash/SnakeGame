@@ -25,7 +25,23 @@
 }
 
 .score {
-  position: absolute;
   top: 0;
   left: 300px;
+}
+.btn-container {
+  display: grid;
+  height: 100px;
+  width: 100px;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 1fr 1fr;
+}
+
+.up {
+  grid-column: 1/5;
+
+  color: white;
+  background-color: lightcoral;
+}
+.left {
+  grid-column: 1 /2;
 }
