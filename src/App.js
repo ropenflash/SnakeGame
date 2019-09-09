@@ -1,6 +1,15 @@
 import React from "react";
+import UIfx from "uifx";
 import Snake from "./Snake";
 import Food from "./Food";
+import eat from "./eat.mp3";
+import gameOver from "./gameover.mp3";
+
+const beep = new UIfx(eat, { volume: 0.1 });
+const over = new UIfx(gameOver, { volume: 0.1 });
+const playSound = () => {
+  beep.play();
+};
 
 const getRandomCoordinates = () => {
   let min = 1;
@@ -30,7 +39,7 @@ class App extends React.Component {
   }
   componentDidUpdate() {
     this.checkIfOutofBorders();
-    this.checkIfCollased();
+    this.checkIfCollapsed();
     this.checkIfEat();
   }
 
@@ -84,7 +93,7 @@ class App extends React.Component {
     }
   }
 
-  checkIfCollased() {
+  checkIfCollapsed() {
     let snake = this.state.snakeDots.slice();
     let head = snake[snake.length - 1];
     snake.pop();
@@ -99,10 +108,12 @@ class App extends React.Component {
     let snakeDots = this.state.snakeDots.slice();
     let head = snakeDots[snakeDots.length - 1];
     let food = this.state.food;
+
     if (head[0] === food[0] && head[1] === food[1]) {
       this.setState({ food: getRandomCoordinates() });
       this.enlargeSnake();
       this.increaseSpeed();
+      playSound();
       this.setState({ score: this.state.score + 10 });
     }
   }
@@ -119,9 +130,11 @@ class App extends React.Component {
     }
   }
   onGameOver() {
+    over.play();
     alert("Game Over");
     this.setState(initialState);
   }
+
   render() {
     window.state = this.state;
     const { snakeDots, food, score } = this.state;
