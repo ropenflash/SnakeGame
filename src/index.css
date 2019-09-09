@@ -30,6 +30,7 @@
 }
 .btn-container {
   display: grid;
+
   height: 250px;
   grid-template-columns: repeat(6, 1fr);
   grid-template-rows: 1fr 1fr;
