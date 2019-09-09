@@ -11,7 +11,7 @@ const getRandomCoordinates = () => {
   return [x, y];
 };
 const initialState = {
-  speed: 200,
+  speed: 500,
   food: [6, 8],
   direction: "RIGHT",
   snakeDots: [[0, 0], [2, 0]],
