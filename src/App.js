@@ -25,7 +25,7 @@ class App extends React.Component {
   componentDidMount() {
     this.setState({ food: getRandomCoordinates() });
 
-    setInterval(this.moveSnake, this.state.speed);
+    // setInterval(this.moveSnake, this.state.speed);
     document.onkeydown = this.onkeydown;
   }
   componentDidUpdate() {
