@@ -130,7 +130,7 @@ class App extends React.Component {
           <Snake snakeDots={snakeDots} />
           <Food dot={food} />
         </div>
-        <h1>{score}</h1>
+        <h1 className="score">Score: {score}</h1>
       </div>
     );
   }
