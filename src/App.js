@@ -115,7 +115,7 @@ class App extends React.Component {
 
   increaseSpeed() {
     if (this.state.speed > 10) {
-      this.setState({ speed: this.state.speed });
+      this.setState({ speed: this.state.speed + 10 });
     }
   }
   onGameOver() {
@@ -123,6 +123,7 @@ class App extends React.Component {
     this.setState(initialState);
   }
   render() {
+    window.state = this.state;
     const { snakeDots, food, score } = this.state;
     return (
       <div>
