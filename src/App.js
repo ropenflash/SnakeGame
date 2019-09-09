@@ -127,6 +127,11 @@ class App extends React.Component {
     const { snakeDots, food, score } = this.state;
     return (
       <div>
+        <h1 className="score">Score: {score}</h1>
+        <div className="game-area">
+          <Snake snakeDots={snakeDots} />
+          <Food dot={food} />
+        </div>
         <div className="btn-container">
           <button
             className="up"
@@ -160,11 +165,6 @@ class App extends React.Component {
           >
             RIGHT
           </button>
-        </div>
-        <h1 className="score">Score: {score}</h1>
-        <div className="game-area">
-          <Snake snakeDots={snakeDots} />
-          <Food dot={food} />
         </div>
       </div>
     );
