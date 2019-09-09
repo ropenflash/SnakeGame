@@ -11,10 +11,11 @@ const getRandomCoordinates = () => {
   return [x, y];
 };
 const initialState = {
-  speed: 1000,
+  speed: 200,
   food: [6, 8],
   direction: "RIGHT",
-  snakeDots: [[0, 0], [2, 0]]
+  snakeDots: [[0, 0], [2, 0]],
+  score: 0
 };
 class App extends React.Component {
   constructor(props) {
@@ -29,6 +30,8 @@ class App extends React.Component {
   }
   componentDidUpdate() {
     this.checkIfOutofBorders();
+    this.checkIfCollased();
+    this.checkIfEat();
   }
 
   onkeydown = e => {
@@ -80,16 +83,54 @@ class App extends React.Component {
       this.onGameOver();
     }
   }
+
+  checkIfCollased() {
+    let snake = this.state.snakeDots.slice();
+    let head = snake[snake.length - 1];
+    snake.pop();
+    snake.forEach(dot => {
+      if (head[0] === dot[0] && head[1] === dot[1]) {
+        this.onGameOver();
+      }
+    });
+  }
+
+  checkIfEat() {
+    let snakeDots = this.state.snakeDots.slice();
+    let head = snakeDots[snakeDots.length - 1];
+    let food = this.state.food;
+    if (head[0] === food[0] && head[1] === food[1]) {
+      this.setState({ food: getRandomCoordinates() });
+      this.enlargeSnake();
+      this.increaseSpeed();
+      this.setState({ score: this.state.score + 10 });
+    }
+  }
+
+  enlargeSnake() {
+    let newSnake = this.state.snakeDots.slice();
+    newSnake.unshift([]);
+    this.setState({ snakeDots: newSnake });
+  }
+
+  increaseSpeed() {
+    if (this.state.speed > 10) {
+      this.setState({ speed: this.state.speed });
+    }
+  }
   onGameOver() {
     alert("Game Over");
     this.setState(initialState);
   }
   render() {
-    const { snakeDots, food } = this.state;
+    const { snakeDots, food, score } = this.state;
     return (
-      <div className="game-area">
-        <Snake snakeDots={snakeDots} />
-        <Food dot={food} />
+      <div>
+        <div className="game-area">
+          <Snake snakeDots={snakeDots} />
+          <Food dot={food} />
+        </div>
+        <h1>{score}</h1>
       </div>
     );
   }
