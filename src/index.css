@@ -51,3 +51,9 @@
 .right {
   grid-column: 5/7;
 }
+@media (min-width: 900px) {
+  .game-area {
+    width: 300px;
+    height: 300px;
+  }
+}
