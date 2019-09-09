@@ -127,7 +127,7 @@ class App extends React.Component {
     const { snakeDots, food, score } = this.state;
     return (
       <div>
-        <h1 className="score">Score: {score}</h1>
+        <h3 className="score">Score: {score}</h3>
         <div className="game-area">
           <Snake snakeDots={snakeDots} />
           <Food dot={food} />
