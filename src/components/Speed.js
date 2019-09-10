@@ -2,7 +2,7 @@ import React from "react";
 
 export default props => {
   return (
-    <>
+    <div className="speed-controller">
       <label>Speed</label>
       <input
         value={props.speed}
@@ -13,6 +13,6 @@ export default props => {
           props.handleChange(e);
         }}
       />
-    </>
+    </div>
   );
 };
