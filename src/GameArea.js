@@ -27,8 +27,8 @@ class GameArea extends React.Component {
     document.onkeydown = this.onkeydown;
   }
   componentDidUpdate(prevProps, prevState) {
-    this.checkIfOutofBorders();
     this.checkIfCollapsed();
+    this.checkIfOutofBorders();
     this.checkIfEat();
 
     if (prevProps.speed !== this.props.speed) {
@@ -102,11 +102,17 @@ class GameArea extends React.Component {
     let snake = this.state.snakeDots.slice();
     let head = snake[snake.length - 1];
     snake.pop();
-    snake.forEach(dot => {
-      if (head[0] === dot[0] && head[1] === dot[1]) {
-        this.onGameOver();
-      }
-    });
+    if (head[1] === 100 || head[1] === 0 || head[0] === 0 || head[0] === 98) {
+      return;
+    } else {
+      snake.forEach(dot => {
+        if (head[0] === dot[0] && head[1] === dot[1]) {
+          console.log(head);
+          console.log(this.state.snakeDots);
+          this.onGameOver();
+        }
+      });
+    }
   }
 
   checkIfEat() {
@@ -117,7 +123,7 @@ class GameArea extends React.Component {
     if (head[0] === food[0] && head[1] === food[1]) {
       this.props.changeFoodCoordinates();
       this.enlargeSnake();
-      this.increaseSpeed();
+      // this.increaseSpeed();
       playSound();
       this.props.updateScore();
     }
@@ -136,8 +142,9 @@ class GameArea extends React.Component {
   }
   onGameOver() {
     // over.play();
-    // alert("Game Over");
-    // this.setState(initialState);
+    alert("Game Over");
+    this.props.resetScore();
+    this.setState(initialState);
   }
 
   render() {

@@ -38,19 +38,20 @@ class App extends React.Component {
     });
   };
   changeDirection = (e, id) => {
+    const { direction } = this.state;
     e = e || window.event;
     switch (e.keyCode || id) {
       case 38:
-        this.setState({ direction: "UP" });
+        if (direction !== "DOWN") this.setState({ direction: "UP" });
         break;
       case 40:
-        this.setState({ direction: "DOWN" });
+        if (direction !== "UP") this.setState({ direction: "DOWN" });
         break;
       case 37:
-        this.setState({ direction: "LEFT" });
+        if (direction !== "RIGHT") this.setState({ direction: "LEFT" });
         break;
       case 39:
-        this.setState({ direction: "RIGHT" });
+        if (direction !== "LEFT") this.setState({ direction: "RIGHT" });
         break;
     }
   };
@@ -60,13 +61,18 @@ class App extends React.Component {
     this.setState({ speed: speed });
   };
 
+  resetScore = () => {
+    this.setState({ score: 0 });
+  };
+
   render() {
     const { food, speed, score, direction } = this.state;
     const {
       changeFoodCoordinates,
       updateScore,
       changeDirection,
-      handleSpeed
+      handleSpeed,
+      resetScore
     } = this;
 
     return (
@@ -80,6 +86,7 @@ class App extends React.Component {
             changeFoodCoordinates={changeFoodCoordinates}
             direction={direction}
             changeDirection={changeDirection}
+            resetScore={resetScore}
           />
           <Food dot={food} />
         </div>
