@@ -4,6 +4,7 @@ import Snake from "./Snake";
 import Food from "./Food";
 import eat from "./eat.mp3";
 import gameOver from "./gameover.mp3";
+import Speed from "./components/Speed";
 
 const beep = new UIfx(eat, { volume: 0.1 });
 const over = new UIfx(gameOver, { volume: 0.1 });
@@ -20,11 +21,12 @@ const getRandomCoordinates = () => {
   return [x, y];
 };
 const initialState = {
-  speed: 300,
+  speed: 100,
   food: [6, 8],
   direction: "RIGHT",
   snakeDots: [[0, 0], [2, 0]],
-  score: 0
+  score: 0,
+  interval: null
 };
 class App extends React.Component {
   constructor(props) {
@@ -34,10 +36,12 @@ class App extends React.Component {
   componentDidMount() {
     this.setState({ food: getRandomCoordinates() });
 
-    setInterval(this.moveSnake, this.state.speed);
+    let interval = setInterval(this.moveSnake, this.state.speed);
+    this.setState({ interval });
     document.onkeydown = this.onkeydown;
   }
   componentDidUpdate() {
+    // setInterval(this.moveSnake, this.state.speed);
     this.checkIfOutofBorders();
     this.checkIfCollapsed();
     this.checkIfEat();
@@ -156,10 +160,19 @@ class App extends React.Component {
     // alert("Game Over");
     // this.setState(initialState);
   }
+  handleSpeed = e => {
+    let { name, value } = e.target;
+    clearInterval(this.state.interval);
+    let speed = (10 - value) * 100;
+    let interval = setInterval(this.moveSnake, speed);
+
+    this.setState({ speed: speed, interval });
+  };
 
   render() {
     window.state = this.state;
-    const { snakeDots, food, score } = this.state;
+    const { snakeDots, food, score, speed, interval } = this.state;
+    const { handleSpeed } = this;
     return (
       <div className="App">
         <h3 className="score">Score: {score}</h3>
@@ -167,6 +180,7 @@ class App extends React.Component {
           <Snake snakeDots={snakeDots} />
           <Food dot={food} />
         </div>
+        <Speed speed={10 - speed / 100} handleChange={handleSpeed} />
         <div className="btn-container">
           <button
             className="up"
