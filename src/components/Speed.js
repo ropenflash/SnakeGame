@@ -7,7 +7,7 @@ export default props => {
       <input
         value={props.speed}
         min={0}
-        max={10}
+        max={8}
         type="range"
         onChange={e => {
           props.handleChange(e);

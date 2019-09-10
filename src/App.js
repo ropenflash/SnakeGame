@@ -21,7 +21,7 @@ const getRandomCoordinates = () => {
   return [x, y];
 };
 const initialState = {
-  speed: 100,
+  speed: 20,
   food: [6, 8],
   direction: "RIGHT",
   snakeDots: [[0, 0], [2, 0]],
@@ -180,7 +180,7 @@ class App extends React.Component {
           <Snake snakeDots={snakeDots} />
           <Food dot={food} />
         </div>
-        <Speed speed={10 - speed / 100} handleChange={handleSpeed} />
+        <Speed speed={10 - speed / 10} handleChange={handleSpeed} />
         <div className="btn-container">
           <button
             className="up"
