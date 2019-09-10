@@ -88,9 +88,31 @@ class App extends React.Component {
   checkIfOutofBorders() {
     let dots = this.state.snakeDots.slice();
     let head = dots[dots.length - 1];
-    if (head[0] >= 100 || head[1] >= 100 || head[0] < 0 || head[1] < 0) {
-      this.onGameOver();
+    let tail = dots[0];
+    if (head[0] > 100) {
+      head[0] = 0;
+      // changeState
+      this.changeState(dots, head);
     }
+    if (head[0] < 0) {
+      head[0] = 98;
+      //changeState
+      this.changeState(dots, head);
+    }
+    if (head[1] > 100) {
+      head[1] = 0;
+      this.changeState(dots, head);
+    }
+
+    if (head[1] < 0) {
+      head[1] = 100;
+      this.changeState(dots, head);
+    }
+  }
+  changeState(dots, head) {
+    dots.push(head);
+    dots.shift();
+    this.setState({ snakeDots: dots });
   }
 
   checkIfCollapsed() {
@@ -130,9 +152,9 @@ class App extends React.Component {
     }
   }
   onGameOver() {
-    over.play();
-    alert("Game Over");
-    this.setState(initialState);
+    // over.play();
+    // alert("Game Over");
+    // this.setState(initialState);
   }
 
   render() {
