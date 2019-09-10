@@ -33,7 +33,7 @@ class App extends React.Component {
   updateScore = () => {
     const { score } = this.state;
     this.setState({ score: score + 10 }, () => {
-      if (score > 10) {
+      if (score >= 100) {
         document.querySelector(".game-area").className += " score100";
       }
     });
@@ -87,8 +87,9 @@ class App extends React.Component {
     return (
       <div>
         <div className="head">
-          <h3 className="score">Score: {score}</h3>
+          <h2 className="score">Score: {score}</h2>
           <button
+            className="play"
             onClick={e => {
               this.toggleGame(e);
             }}

@@ -1,3 +1,12 @@
+html {
+  box-sizing: border-box;
+}
+*,
+*::after,
+*::before {
+  box-sizing: inherit;
+}
+
 .App {
   background-color: white;
 }
@@ -42,6 +51,7 @@
 
 .score {
   top: 0;
+  flex: 1 0 auto;
   left: 300px;
 }
 .btn-container {
@@ -85,4 +95,23 @@
   justify-content: space-evenly;
   margin-top: -30px;
   margin-bottom: 5px;
+}
+
+.head {
+  display: flex;
+  justify-content: space-around;
+}
+
+.play {
+  flex: 1 0 auto;
+  border-style: initial;
+  background: #1779b3;
+  font-size: 20px;
+  padding: 0;
+  margin: 0;
+  color: white;
+  height: 60px;
+  width: 10px;
+  border-radius: 50px;
+  text-shadow: none;
 }

@@ -21,7 +21,7 @@ class GameArea extends React.Component {
     this.state = initialState;
   }
   componentDidMount() {
-    let { speed, gameStatus } = this.props;
+    let { speed } = this.props;
 
     let interval = setInterval(this.moveSnake, speed);
     this.setState({ interval });
@@ -36,7 +36,6 @@ class GameArea extends React.Component {
       clearInterval(prevState.interval);
     }
     if (this.props.gameStatus === "PAUSE" && prevProps.gameStatus === "PLAY") {
-      console.log("make me run");
       let newInterval = setInterval(this.moveSnake, this.props.speed);
       this.setState({ interval: newInterval });
     }
