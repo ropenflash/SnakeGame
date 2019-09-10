@@ -16,7 +16,8 @@ const initialState = {
   speed: 100,
   food: [6, 8],
   score: 0,
-  direction: "RIGHT"
+  direction: "RIGHT",
+  gameStatus: "PAUSE"
 };
 class App extends React.Component {
   constructor(props) {
@@ -53,10 +54,12 @@ class App extends React.Component {
       case 39:
         if (direction !== "LEFT") this.setState({ direction: "RIGHT" });
         break;
+      default:
+        return;
     }
   };
   handleSpeed = e => {
-    let { name, value } = e.target;
+    let { value } = e.target;
     let speed = (10 - value) * 10;
     this.setState({ speed: speed });
   };
@@ -65,8 +68,14 @@ class App extends React.Component {
     this.setState({ score: 0 });
   };
 
+  toggleGame = e => {
+    let { gameStatus } = this.state;
+    gameStatus = gameStatus === "PLAY" ? "PAUSE" : "PLAY";
+    this.setState({ gameStatus });
+  };
+
   render() {
-    const { food, speed, score, direction } = this.state;
+    const { food, speed, score, direction, gameStatus } = this.state;
     const {
       changeFoodCoordinates,
       updateScore,
@@ -77,7 +86,16 @@ class App extends React.Component {
 
     return (
       <div>
-        <h3 className="score">Score: {score}</h3>
+        <div className="head">
+          <h3 className="score">Score: {score}</h3>
+          <button
+            onClick={e => {
+              this.toggleGame(e);
+            }}
+          >
+            {gameStatus}
+          </button>
+        </div>
         <div className="game-area">
           <GameArea
             food={food}
@@ -87,6 +105,7 @@ class App extends React.Component {
             direction={direction}
             changeDirection={changeDirection}
             resetScore={resetScore}
+            gameStatus={gameStatus}
           />
           <Food dot={food} />
         </div>

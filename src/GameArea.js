@@ -21,16 +21,25 @@ class GameArea extends React.Component {
     this.state = initialState;
   }
   componentDidMount() {
-    let { speed } = this.props;
+    let { speed, gameStatus } = this.props;
+
     let interval = setInterval(this.moveSnake, speed);
     this.setState({ interval });
+
     document.onkeydown = this.onkeydown;
   }
   componentDidUpdate(prevProps, prevState) {
     this.checkIfCollapsed();
     this.checkIfOutofBorders();
     this.checkIfEat();
-
+    if (this.props.gameStatus === "PLAY") {
+      clearInterval(prevState.interval);
+    }
+    if (this.props.gameStatus === "PAUSE" && prevProps.gameStatus === "PLAY") {
+      console.log("make me run");
+      let newInterval = setInterval(this.moveSnake, this.props.speed);
+      this.setState({ interval: newInterval });
+    }
     if (prevProps.speed !== this.props.speed) {
       let { interval } = prevState;
       clearInterval(interval);
@@ -60,6 +69,8 @@ class GameArea extends React.Component {
       case "UP":
         head = [head[0], head[1] - 2];
         break;
+      default:
+        return;
     }
     dots.push(head);
     dots.shift();
@@ -71,7 +82,7 @@ class GameArea extends React.Component {
   checkIfOutofBorders() {
     let dots = this.state.snakeDots.slice();
     let head = dots[dots.length - 1];
-    let tail = dots[0];
+
     if (head[0] > 100) {
       head[0] = 0;
       // changeState
@@ -141,7 +152,7 @@ class GameArea extends React.Component {
     }
   }
   onGameOver() {
-    // over.play();
+    over.play();
     alert("Game Over");
     this.props.resetScore();
     this.setState(initialState);
