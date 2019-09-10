@@ -163,7 +163,7 @@ class App extends React.Component {
   handleSpeed = e => {
     let { name, value } = e.target;
     clearInterval(this.state.interval);
-    let speed = (10 - value) * 100;
+    let speed = (10 - value) * 10;
     let interval = setInterval(this.moveSnake, speed);
 
     this.setState({ speed: speed, interval });
