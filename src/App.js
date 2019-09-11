@@ -2,6 +2,8 @@ import React from "react";
 import GameArea from "./GameArea";
 import Speed from "./components/Speed";
 import Food from "./Food";
+import P5Wrapper from "react-p5-wrapper";
+import sketch from "./components/sketch";
 
 const getRandomCoordinates = () => {
   let min = 1;
@@ -88,6 +90,9 @@ class App extends React.Component {
       <div>
         <div className="head">
           <h2 className="score">Score: {score}</h2>
+          <div>
+            <P5Wrapper sketch={sketch} />
+          </div>
           <button
             className="play"
             onClick={e => {
